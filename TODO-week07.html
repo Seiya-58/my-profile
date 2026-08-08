@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モダンTODOリスト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-slate-800 text-slate-100 rounded-2xl shadow-xl p-8 w-full max-w-md border border-slate-700">
+        <h1 class="text-2xl font-bold mb-6 text-center tracking-wide text-indigo-400">My Tasks</h1>
+        
+        <div class="flex gap-2 mb-6">
+            <input id="todoInput" type="text" placeholder="新しいタスクを入力..." 
+                class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            <button id="addBtn" 
+                class="bg-indigo-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-indigo-500 transition shadow-md">
+                追加
+            </button>
+        </div>
+
+        <ul id="todoList" class="space-y-3"></ul>
+    </div>
+
+    <script>
+        const addButton = document.querySelector("#addBtn");
+        const todoInput = document.querySelector("#todoInput");
+        const todoList = document.querySelector("#todoList");
+
+        addButton.addEventListener("click", () => {
+            const text = todoInput.value.trim();
+
+            if (text === "") {
+                return;
+            }
+
+            const item = document.createElement("li");
+            item.className = "flex items-center justify-between bg-slate-700/50 border border-slate-700/80 rounded-xl px-4 py-3 transition hover:bg-slate-700";
+
+            const span = document.createElement("span");
+            span.textContent = text;
+            span.className = "text-slate-200 transition break-all pr-2";
+
+            const buttonGroup = document.createElement("div");
+            buttonGroup.className = "flex items-center gap-2 flex-shrink-0";
+
+            const doneBtn = document.createElement("button");
+            doneBtn.textContent = "完了";
+            doneBtn.className = "text-xs bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-lg hover:bg-emerald-600/30 transition font-medium";
+            
+            doneBtn.addEventListener("click", () => {
+                span.classList.toggle("line-through");
+                span.classList.toggle("text-slate-500");
+            });
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "削除";
+            deleteBtn.className = "text-xs bg-rose-600/20 text-rose-400 border border-rose-500/30 px-3 py-1.5 rounded-lg hover:bg-rose-600/30 transition font-medium";
+
+            deleteBtn.addEventListener("click", () => {
+                const isConfirmed = window.confirm(`「${text}」を削除してもよろしいですか？`);
+                if (isConfirmed) {
+                    item.remove();
+                }
+            });
+
+            buttonGroup.appendChild(doneBtn);
+            buttonGroup.appendChild(deleteBtn);
+
+            item.appendChild(span);
+            item.appendChild(buttonGroup);
+            todoList.appendChild(item);
+
+            todoInput.value = "";
+        });
+    </script>
+</body>
+</html>
