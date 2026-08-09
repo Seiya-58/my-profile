@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <header class="bg-white shadow-sm py-6 mb-8">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-2xl font-bold text-gray-900">チームメンバー一覧</h1>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pb-12">
+        <div id="memberList" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </main>
+
+    <script>
+        const members = [
+            {
+                name: "田中 太郎",
+                role: "フロントエンドエンジニア",
+                comment: "UI/UXにこだわり、使いやすい画面を作ります！"
+            },
+            {
+                name: "鈴木 次郎",
+                role: "バックエンドエンジニア",
+                comment: "データベースの設計やAPIの構築を担当しています。"
+            },
+            {
+                name: "佐藤 三郎",
+                role: "UI/UXデザイナー",
+                comment: "ユーザー視点に立った温かみのあるデザインが好きです。"
+            },
+            {
+                name: "高橋 四郎",
+                role: "プロダクトマネージャー",
+                comment: "チーム全体をサポートし、プロジェクトを成功に導きます。"
+            },
+            {
+                name: "渡辺 五郎",
+                role: "マーケター",
+                comment: "サービスの魅力を多くの方に届けるため奮闘中です！"
+            }
+        ];
+
+        const memberList = document.getElementById("memberList");
+
+        members.forEach((member) => {
+            const card = document.createElement("div");
+            card.className = "bg-white rounded-xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition-shadow";
+
+            card.innerHTML = `
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 mb-1">${member.name}</h2>
+                    <p class="text-xs font-semibold text-indigo-600 bg-indigo-50 inline-block px-2.5 py-1 rounded-full mb-4">${member.role}</p>
+                    <p class="text-gray-600 text-sm leading-relaxed">${member.comment}</p>
+                </div>
+            `;
+
+            memberList.appendChild(card);
+        });
+    </script>
+</body>
+</html>
