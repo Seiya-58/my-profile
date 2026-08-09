@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+  <div class="max-w-md mx-auto bg-white rounded-lg shadow p-6">
+    <h1 class="text-xl font-bold mb-4">GitHubユーザー検索</h1>
+    
+    <div class="flex gap-2 mb-4">
+      <input type="text" id="username" placeholder="ユーザー名を入力" class="border rounded px-3 py-2 flex-1">
+      <button id="searchBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">検索</button>
+    </div>
+
+    <div id="result" class="text-center"></div>
+  </div>
+
+  <script>
+    const searchBtn = document.getElementById("searchBtn");
+    const usernameInput = document.getElementById("username");
+    const resultDiv = document.getElementById("result");
+
+    searchBtn.addEventListener("click", async () => {
+      const username = usernameInput.value.trim();
+      if (!username) return;
+
+      resultDiv.textContent = "読み込み中...";
+
+      try {
+        const response = await fetch(`https://api.github.com/users/${username}`);
+        
+        if (!response.ok) {
+          throw new Error("ユーザーが見つかりませんでした");
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        resultDiv.innerHTML = `
+          <div class="flex flex-col items-center">
+            <img src="${data.avatar_url}" alt="アバター画像" class="w-24 h-24 rounded-full mb-3">
+            <h2 class="text-lg font-bold">${data.name || "名前なし"}</h2>
+            <p class="text-gray-600 text-sm mb-2">${data.bio || "自己紹介なし"}</p>
+            <p class="text-sm font-semibold">フォロワー数: ${data.followers}人</p>
+          </div>
+        `;
+      } catch (error) {
+        resultDiv.textContent = "ユーザーが見つかりませんでした";
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
