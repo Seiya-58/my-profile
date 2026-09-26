@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@source "../../posse-task-app/src/App.jsx";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer utilities {
+  .dark .bg-white { background-color: #292524; }
+  .dark .bg-stone-100, .dark .bg-stone-50, .dark .bg-gray-200 { background-color: #35302d; }
+  .dark .text-stone-500, .dark .text-gray-400 { color: #bcb3aa; }
+  .dark .text-gray-700 { color: #e7e5e4; }
+  .dark .border-stone-200 { border-color: #57534e; }
+  .dark .bg-amber-50 { background-color: #42351b; }
+  .dark .text-amber-900 { color: #fde68a; }
+  .dark input, .dark select { color-scheme: dark; }
+}
